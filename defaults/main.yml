@@ -254,6 +254,12 @@ php__default_configuration:
         options: |
           date.timezone =          {{ php__ini_date_timezone }}
 
+  - filename: '../cli/conf.d/30-memory_limit'
+    name: 'PHP'
+    options: |
+      ; Don't limit memory for php-cli execution
+      memory_limit = -1
+
 # ]]]
 # .. envvar:: php__configuration [[[
 #
@@ -285,6 +291,12 @@ php__dependent_configuration: []
 # Global PHP-FPM configuration [[[
 # --------------------------------
 
+# .. envvar:: php__fpm_privileged_group [[[
+#
+# What system group has privileged access to :program:`php-fpm` service.
+php__fpm_privileged_group: 'webadmins'
+
+                                                                   # ]]]
 # .. envvar:: php__fpm_syslog [[[
 #
 # Enable or disable error logging to ``syslog``. Currently the ``syslog``
@@ -347,7 +359,6 @@ php__fpm_process_control_timeout: '0'
 #
 # Maximum number of PHP-FPM child processes.
 php__fpm_process_max: '128'
-
                                                                    # ]]]
                                                                    # ]]]
 # PHP-FPM pool defaults [[[
@@ -623,5 +634,6 @@ php__logrotate__dependent_config:
       {{ php__logrotate_lib_base }}/php{{ php__version }}-fpm-reopenlogs
       {% endif %}
 
+# ]]]
 # ]]]
 # ]]]
